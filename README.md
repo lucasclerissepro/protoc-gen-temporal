@@ -1,10 +1,34 @@
-# Atome
+# protoc-gen-temporal
 
-Atome is a golang framework highly focused on code generation. It uses Protobuf for schema definition and enrich default Protobuf with tons of generators 
-based on industry based practices.
+A protobuf plugin simplifying work with [Temporal](https://temporal.io) by turning RPC Services into type safe workflows.
 
+# Getting started
 
-## Temporal based framework
+Starts by defining the following RPC service:
 
-The whole framework is built on top of [Temporal](https://temporal.io) which is one of the best way to build reliable services nowadays.
-Atome cares about how services communicates and provides opinionated way to implement routes. The inside of the service are entirely up to the developer, we do not provide any wrappers around databases or other 3rd party systems.
+```
+syntax = "proto3";
+
+message DoSomethingRequest {
+   hello string = 0;
+}
+
+service MyWorkflow {
+  option (temporal.worker_defaults).task_queue = "my_workflow";
+  
+  // DoSomething is a workflow that does something
+  rpc DoSomething(DoSomethingRequest) returns (google.protobuf.Empty) {
+    option (temporal.workflow).queries = {
+      name: "something_info",
+      response_type: "SomethingInfoResponse"
+    }
+    
+    option (temporal.workflow).signals = {
+      name: "cancel_something",
+      request_type: "CancelSomethingRequest"
+    }
+  }
+}
+```
+
+It will generate a typesafe client SDK and well as interface that needs to be implemented on worker side.
