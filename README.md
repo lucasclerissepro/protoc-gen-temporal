@@ -6,7 +6,7 @@ A protobuf plugin simplifying work with [Temporal](https://temporal.io) by turni
 
 Starts by defining the following RPC service:
 
-```
+```protobuf
 syntax = "proto3";
 
 message DoSomethingRequest {
