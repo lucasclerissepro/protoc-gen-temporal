@@ -32,3 +32,12 @@ service MyWorkflow {
 ```
 
 It will generate a typesafe client SDK and well as interface that needs to be implemented on worker side.
+
+# Language support
+
+| Language   | Supported        |
+|------------|------------------|
+| Golang     | Work in progress |
+| C#         | Not started      |
+| Javascript | Not started      |
+| Python     | Not started      |
