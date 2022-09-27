@@ -1,0 +1,12 @@
+version: v1
+plugins:
+
+  - name: go
+    out: gen/go
+    opt: paths=source_relative
+
+  - name: temporal 
+    out: gen/go
+    opt:
+      - paths=source_relative
+      - require_unimplemented_servers=false

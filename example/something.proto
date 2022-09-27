@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "temporal/temporal.proto";
+
+option go_package = "github.com/lucasclerissepro/protoc-gen-temporal/example";
+
+message GreetRequest {
+   string whom = 1;
+}
+
+service MyWorkflowWorker {
+  option (temporal.worker_defaults).task_queue = "my_workflow";
+  
+  // DoSomething is a workflow that does something
+  rpc Greet(GreetRequest) returns (google.protobuf.Empty) {
+    option (temporal.workflow).queries = {
+      name: "something_info",
+      response_type: "SomethingInfoResponse"
+    };
+    
+    option (temporal.workflow).signals = {
+      name: "cancel_something",
+      request_type: "CancelSomethingRequest"
+    };
+  }
+}

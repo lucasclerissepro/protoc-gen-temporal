@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package temporal;
+
+option go_package = "github.com/lucasclerissepro/protoc-gen-temporal/temporal";
+
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+extend google.protobuf.ServiceOptions {
+  optional WorkerOptions worker_defaults = 1071;
+}
+
+extend google.protobuf.MethodOptions {
+  optional WorkflowOptions workflow = 1071;
+}
+
+message WorkerOptions {
+  string task_queue = 1;
+}
+
+message WorkflowOptions {
+  repeated QueryOptions queries = 1;
+  repeated SignalOptions signals = 2;
+}
+
+message QueryOptions {
+  string name = 1;
+  string response_type = 2;
+}
+
+message SignalOptions {
+  string name = 1;
+  string request_type = 2;
+}
