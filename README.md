@@ -18,15 +18,17 @@ service MyWorkflow {
   
   // DoSomething is a workflow that does something
   rpc DoSomething(DoSomethingRequest) returns (google.protobuf.Empty) {
+  
     option (temporal.workflow).queries = {
       name: "something_info",
       response_type: "SomethingInfoResponse"
-    }
+    };
     
     option (temporal.workflow).signals = {
       name: "cancel_something",
       request_type: "CancelSomethingRequest"
-    }
+    };
+    
   }
 }
 ```
