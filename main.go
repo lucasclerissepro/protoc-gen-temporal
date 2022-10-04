@@ -1,16 +1,13 @@
 package main
 
 import (
-	"google.golang.org/protobuf/compiler/protogen"
+  "github.com/lyft/protoc-gen-star"
+	pgsgo "github.com/lyft/protoc-gen-star/lang/go"
 )
 
 func main() {
-	protogen.Options{}.Run(func(gen *protogen.Plugin) error {
-		for _, f := range gen.Files {
-			if !f.Generate {
-				continue
-			}
-		}
-		return nil
-	})
+  pgs.Init(pgs.DebugEnv("DEBUG")).
+    RegisterModule(Temporal()).
+    RegisterPostProcessor(pgsgo.GoFmt()).
+    Render()
 }
