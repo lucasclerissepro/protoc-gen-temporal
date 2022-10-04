@@ -16,10 +16,6 @@ permissions:
   packages: write # needed for ghcr access
 
 
-env:
-  OWNER: lucasclerissepro
-  NAME: protoc-gen-temporal
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -62,7 +58,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            plugins.buf.build/${{ env.OWNER }}/${{ env.NAME }}
+            plugins.buf.build/lucasclerissepro/protoc-gen-temporal
           tags: |
             type=raw,value=${{ steps.prep.outputs.VERSION }}
 
