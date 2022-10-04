@@ -1,0 +1,79 @@
+name: release
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'image tag prefix'
+        default: 'rc'
+        required: true
+
+permissions:
+  contents: write # needed to write releases
+  id-token: write # needed for keyless signing
+  packages: write # needed for ghcr access
+
+
+env:
+  OWNER: lucasclerissepro
+  NAME: protoc-gen-temporal
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - 
+        name: Prepare
+        id: prep
+        run: |
+          VERSION="${{ github.event.inputs.tag }}-${GITHUB_SHA::8}"
+          if [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF/refs\/tags\//}
+          fi
+          echo ::set-output name=BUILD_DATE::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+          echo ::set-output name=VERSION::${VERSION}
+
+      - uses: bufbuild/buf-setup-action@v1
+
+      - 
+        name: Setup QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - 
+        name: Setup Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      -
+        name: Login to Buf BSR
+        uses: docker/login-action@v2
+        with:
+          registry: plugins.buf.build
+          username: lucasclerissepro 
+          password: ${{ secrets.BUF_TOKEN }}
+
+      - 
+        name: Generate images meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            plugins.buf.build/${{ env.OWNER }}/${{ env.NAME }}
+          tags: |
+            type=raw,value=${{ steps.prep.outputs.VERSION }}
+
+      - 
+        name: Publish images
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
