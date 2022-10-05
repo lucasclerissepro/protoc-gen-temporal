@@ -1,5 +1,10 @@
+<p align="center">
+   <a href="https://dyn.gg">
+   <img src="./docs/images/banner.png">
+   </a>
+</p>
+
 <div align="center">
-  <h2>protoc-gen-temporal</h2>
   Typesafe temporal workflows
   <br />
   <a href="#about"><strong>Explore the docs »</strong></a>
