@@ -10,13 +10,13 @@ import (
 
 // GreeterWorkflow simply greets user with a given name
 func GreeterWorkflow(ctx workflow.Context, name string) error {
-  
   ao := workflow.ActivityOptions{
-		StartToCloseTimeout: 10 * time.Second,
+		StartToCloseTimeout: 60 * time.Second,
 	}
 
 	ctx = workflow.WithActivityOptions(ctx, ao)
   future := workflow.ExecuteActivity(ctx, activity.LogString, fmt.Sprintf("Hello %s", name))
   future.Get(ctx, nil)
+
 	return nil
 }

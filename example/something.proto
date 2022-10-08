@@ -9,7 +9,7 @@ message GreetRequest {
    string whom = 1;
 }
 
-service MyWorkflowWorker {
+service MyWorker {
   option (temporal.worker_defaults).task_queue = "my_workflow";
   
   // DoSomething is a workflow that does something

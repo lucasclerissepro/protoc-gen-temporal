@@ -17,7 +17,10 @@ func main() {
 	}
 	defer c.Close()
 
-	w := worker.New(c, "greeter.v1", worker.Options{})
+	w := worker.New(c, "greeter.v1", worker.Options{
+    TaskQueueActivitiesPerSecond: 10,
+  })
+
 	w.RegisterWorkflow(workflow.GreeterWorkflow)
 	w.RegisterActivity(activity.LogString)
 	err = w.Run(worker.InterruptCh())
