@@ -39,9 +39,9 @@
 
 <h2><img height="20" src="./img/about.svg">&nbsp;&nbsp;About the project</h2>
 
-> A protobuf plugin to automatically scaffold a temporal worker with sane
-> defaults. On top of that this plugin can generate typesafe clients for
-> consumers to call your workflow. 
+> This protobuf plugins generate [temporal](https://temporal.io) workflows and
+> activities. Just define workflows and activities as a simple protobuf service
+> and the rest will be generated (including a client for workflow consumers).
 
 <h2><img height="20" src="./img/installation.svg">&nbsp;&nbsp;Installation</h2>
 
