@@ -23,11 +23,7 @@
 <p align="center">
 
   <a aria-label="Dyn.gg logo" href="https://dyn.gg">
-    <img src="https://img.shields.io/badge/MADE%20BY%20Dyn-000000.svg?style=for-the-badge&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAABUCAYAAAD6QtuFAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAANnSURBVHgB7dztbdswEAbg10UHyAjMBskGygRNJ6g6QbpB1AmSDeoN0k5gb5AR5A3qDd6SkNsCiU3q446UoHsAQz8ckCZNUUfyHMAYY4wxxhhjjDFG2QbKSF75yxXKOW42myMU5ejE1l8cytn7TryDog9Q5DuwRtkODKrT51CjNhL9B3f+skP5TgzC7XytdVtrjsQG8+jAIMzJ36BEZSSeRmGLeQmj8NaPxgOEfYSOJ8jbYrp7/3rG3IVJnPIarEkIaSirZTc9rINv7APl1ViLMFqoMAqxJr7BW8q7wVqwG4XSfmAhROJE3+CwMqkg6/pSTMdunnxEP4fYe76OryiNBUIays69FUpj5oeJf/+Rslp223VlKDQoqCP1acy9QYMSTg36TVmviTo1IoAgtCP/aFRqkIvUd0NdGuv9y1ggpKH83HtOhVwUGhRuJxepTyMCOGeHHJg5pKHOcjLmHpp8BVdcfkiT/Dwc+JAZejzwAPkt/++X3mB3izfIy0HrKIE6D5OXRJ1aIU1KdI6e0om5Q5p7lvUCSdSJ0eYQ0qRUkMLMW/7MF9Kk9Ap5kg8Wdt+Gg6x94ujyAfNQscdoTHaib+zeX/aQFea7WBjxC/NwOLV/uvBtUN5Tos6W5dV9+qf3zrYvcOsvX3r86fH06uP2Un4Mu9sozzLsPPlsMvbf+hILVH1ZO5bjoMEX3CQqFj3ipN4mbIreIRnTa+cawnyZz8yrpXbGBS+vJFS+PXZfnPQOeoxaCt7bhu3OVO6gJDSMeeTLuOD7kEc9Xc3X8Up9NUYYfXh/6riwsjj4113koD1scvZJBwlZ/s+R+irohjzb7Af5/D9X1ZG/GborXSfq3FGPQwk9Gj10+6xlZDlInWPaYJ55Pxwf4zWJclOx6lAt55pEyvG3XurkTzrkqTGR1q8Han+Zcov89JP850T5fbPCLnHodmmuMUeU2YGpsFaUO+IsuYNTDuWfnnmWYBNJ/yytguzPcj9hjSgbEDusEeWOEtaV+P4Wu4PvKYlBB8TX4xXGJdqHkGaLJeD0B0yTKLvlOA5LwvHLM60sscVMD/9wfBpeHSlz7HpcJ0EpBw5PB9klyhu6K/RXgyXjsJDHRcoZmyWmvuU/q/+LE8vPYfdjyTGB/EHjXxYYY4wxxhhjjDHGmKX5AwskxsWjl389AAAAAElFTkSuQmCC">
-  </a>
-
-  <a href="https://wakatime.com/badge/github/lucasclerissepro/protoc-gen-temporal">
-    <img src="https://wakatime.com/badge/github/lucasclerissepro/protoc-gen-temporal.svg?style=for-the-badge&color=000000" alt="wakatime">
+    <img src="https://img.shields.io/badge/MADE%20BY%20Dyn-000000.svg?style=for-the-badge">
   </a>
 
   <a aria-label="License" href="https://github.com/lucasclerissepro/protoc-gen-temporal/blob/main/license.md">
@@ -41,7 +37,7 @@
 
 </div>
 
-<h2><img height="20" src="./img/whatissurreal.svg">&nbsp;&nbsp;About the project</h2>
+<h2><img height="20" src="./img/about.svg">&nbsp;&nbsp;About the project</h2>
 
 > A protobuf plugin to automatically scaffold a temporal worker with sane
 > defaults. On top of that this plugin can generate typesafe clients for
@@ -110,6 +106,6 @@ This project is licensed under the **MIT license**.
 
 See [LICENSE](LICENSE) for more information.
 
-## Acknowledgements
+<h2><img height="20" src="./img/ack.svg">&nbsp;&nbsp;Acknowledgements</h2>
 
 - [Datadog](https://datadog.com): For inspiring this project.
