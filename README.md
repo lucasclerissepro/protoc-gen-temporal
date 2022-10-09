@@ -98,6 +98,11 @@ Please read [our contribution guidelines](docs/CONTRIBUTING.md), and thank you f
 protoc-gen-temporal follows good practices of security, but 100% security cannot be assured.
 protoc-gen-temporal is provided **"as is"** without any **warranty**. Use at your own risk.
 
+The following components are scanned:
+
+- protoc plugin
+- generated code
+
 _For more information and to report security issues, please refer to our [security documentation](docs/SECURITY.md)._
 
 <h2><img height="20" src="./img/license.svg">&nbsp;&nbsp;License</h2>
