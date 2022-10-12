@@ -9,5 +9,3 @@ plugins:
     out: gen/go
     opt:
       - paths=source_relative
-      - lang=go
-      - require_unimplemented_servers=false
