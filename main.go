@@ -15,10 +15,18 @@ import (
 
 const (
 	temporalPackage = protogen.GoImportPath("go.temporal.io/sdk/temporal")
+	stringsPackage  = protogen.GoImportPath("strings")
+	strconvPackage  = protogen.GoImportPath("strconv")
+	contextPackage  = protogen.GoImportPath("context")
+	fmtPackage      = protogen.GoImportPath("fmt")
 
 	commentWidth               = 80
 	generatedFilenameExtension = ".temporal.go"
 	generatedPackageSuffix     = "temporal"
+
+	minimumSupportedMajor = 1
+	minimumSupportedMinor = 17
+	minimumSupportedPatch = 0
 )
 
 func main() {
@@ -49,6 +57,11 @@ func generate(p *protogen.Plugin, f *protogen.File) error {
 	generatePreamble(f, gf)
 	generateVersionConstraints(f, gf)
 
+	for _, s := range f.Services {
+		generateClientInterface(f, gf, s)
+		generateClientImplementation(f, gf, s)
+	}
+
 	return nil
 }
 
@@ -72,9 +85,84 @@ func generateVersionConstraints(f *protogen.File, gf *protogen.GeneratedFile) er
 	// temporal.SDKVersion
 
 	gf.P("const (")
-	gf.P("temporalVersion = ", temporalPackage.Ident("SDKVersion"))
+	gf.P("temporalSDKVersion = ", temporalPackage.Ident("SDKVersion"))
 	gf.P(")")
 
+	wrapComments(gf, `Runtime validation of temporal SDK version. 
+  The overhead is minimal and only run one when the package is loaded. This is 
+  the only way we've found so far to properly ensure this generated code is compatible 
+  with the expected Temporal SDK version.
+
+  We're currently trying to open a PR on the Go temporal SDK to add some simple constant
+  simplifying code generation and hopefully we'll be able to switch to comptime assertion.
+  `)
+
+	gf.P("func init() {")
+	gf.P("temporalVersionComponents := ", stringsPackage.Ident("Split(temporalSDKVersion, \".\")"))
+	gf.P("major, err := ", strconvPackage.Ident("Atoi(temporalVersionComponents[0])"))
+	gf.P("if err != nil {")
+	gf.P("panic(\"failed to convert major SDK version to integer\")")
+	gf.P("}")
+
+	gf.P("minor, err := ", strconvPackage.Ident("Atoi(temporalVersionComponents[1])"))
+	gf.P("if err != nil {")
+	gf.P("panic(\"failed to convert minor SDK version to integer\")")
+	gf.P("}")
+
+	gf.P("patch, err := ", strconvPackage.Ident("Atoi(temporalVersionComponents[2])"))
+	gf.P("if err != nil {")
+	gf.P("panic(\"failed to convert patch SDK version to integer\")")
+	gf.P("}")
+	gf.P()
+
+	gf.P("panicPrefix := \"Temporal SDK (\" + temporalSDKVersion + \")\"")
+  gf.P()
+
+	gf.P("if major < ", minimumSupportedMajor, "|| major > ", minimumSupportedMajor, " {")
+	gf.P("panic(panicPrefix + \" major version is not supported expect minimum ", minimumSupportedMajor, " major version\")")
+	gf.P("}")
+
+	gf.P("if minor < ", minimumSupportedMinor, " {")
+	gf.P("panic(panicPrefix + \" minor version is not supported expect minimum ", minimumSupportedMinor, " minor version\")")
+	gf.P("}")
+
+	gf.P("if patch < ", minimumSupportedPatch, " {")
+	gf.P("panic(panicPrefix + \" patch version is not supported expect minimum ", minimumSupportedPatch, " patch version\")")
+	gf.P("}")
+
+	gf.P("}")
+
+	return nil
+}
+
+func generateClientInterface(f *protogen.File, gf *protogen.GeneratedFile, s *protogen.Service) error {
+	gf.P()
+	gf.P("type Client interface { ")
+
+	for _, m := range s.Methods {
+		gf.P(m.GoName, "(ctx ", contextPackage.Ident("Context"), ", ", "req *", m.Input.GoIdent.GoName, ") error")
+	}
+
+	gf.P("}")
+	gf.P()
+	return nil
+}
+
+func generateClientImplementation(f *protogen.File, gf *protogen.GeneratedFile, s *protogen.Service) error {
+	gf.P("type client struct {}")
+	gf.P()
+
+	for _, m := range s.Methods {
+		gf.P("func (c *client) ", m.GoName, "(ctx ", contextPackage.Ident("Context"), ", ", "req *", m.Input.GoIdent.GoName, ") error {")
+		gf.P("return nil")
+		gf.P("}")
+		gf.P()
+	}
+
+	gf.P("func New", s.GoName, "Client() Client {")
+	gf.P("return &client{}")
+	gf.P("}")
+	gf.P()
 	return nil
 }
 

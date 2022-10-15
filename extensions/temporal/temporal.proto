@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package temporal;
 
-option go_package = "github.com/lucasclerissepro/protoc-gen-temporal/temporal";
+option go_package = "github.com/lucasclerissepro/protoc-gen-temporal/extensions/temporal";
 
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/duration.proto";

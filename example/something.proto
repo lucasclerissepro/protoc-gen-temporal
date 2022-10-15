@@ -5,23 +5,25 @@ import "temporal/temporal.proto";
 
 option go_package = "github.com/lucasclerissepro/protoc-gen-temporal/example";
 
-message GreetRequest {
-   string whom = 1;
+message SendEmailRequest {
+   string address = 1;
+   string subject = 2;
+   string body = 3;
 }
 
-service MyWorker {
+message SendEmailWithRetentionRequest {
+   string address = 1;
+   string subject = 2;
+   repeated string bodyVariants = 3;
+}
+
+service EmailWorker {
   option (temporal.worker_defaults).task_queue = "my_workflow";
   
-  // DoSomething is a workflow that does something
-  rpc Greet(GreetRequest) returns (google.protobuf.Empty) {
-    option (temporal.workflow).queries = {
-      name: "something_info",
-      response_type: "SomethingInfoResponse"
-    };
-    
-    option (temporal.workflow).signals = {
-      name: "cancel_something",
-      request_type: "CancelSomethingRequest"
-    };
-  }
+  // SendEmail send an email without any strategies.
+  rpc SendEmail(SendEmailRequest) returns (google.protobuf.Empty) {}
+
+  // SendEmailWithRetention sends an email and then try to convert the user by
+  // re-sending variants over time.
+  rpc SendEmailWithRetention(SendEmailWithRetentionRequest) returns (google.protobuf.Empty) {}
 }
