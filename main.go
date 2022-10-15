@@ -116,7 +116,7 @@ func generateVersionConstraints(f *protogen.File, gf *protogen.GeneratedFile) er
 	gf.P()
 
 	gf.P("panicPrefix := \"Temporal SDK (\" + temporalSDKVersion + \")\"")
-  gf.P()
+	gf.P()
 
 	gf.P("if major < ", minimumSupportedMajor, "|| major > ", minimumSupportedMajor, " {")
 	gf.P("panic(panicPrefix + \" major version is not supported expect minimum ", minimumSupportedMajor, " major version\")")
