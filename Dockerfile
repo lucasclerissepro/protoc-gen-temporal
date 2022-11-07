@@ -1,5 +1,5 @@
 # specify the base image to  be used for the application, alpine or ubuntu
-FROM golang:1.18-alpine as builder
+FROM golang:1.19.3-alpine as builder
 
 ENV GOOS=linux GOARCH=amd64 CGO_ENABLED=0
 
